@@ -38,12 +38,19 @@ export async function POST(request: Request) {
     // Build the prompt with context
     // const prompt = `Context: ${context.map(c => c.message).join(', ') || 'none'}\nUser: ${message}\nAssistant:`
     // src/app/api/chat/route.ts
-    const prompt = `You're a mental health assistant. Use this conversation history: ${context}
-    Current message: ${message}
-    Respond concisely without repeating the context. Focus on practical advice:`
+    // src/app/api/chat/route.ts
+const prompt = `You are a mental health companion. Use ONLY the user's previous messages as context.
+User's previous messages: ${context.map(c => c.message).join(' | ') || 'None'}
+Current message: ${message}
+Respond directly to the user's current message. Never generate user messages or example dialogues. Do not write example.
+Focus on: 
+- Asking open-ended questions
+- Validating feelings
+- Suggesting 1-2 practical strategies
+Keep responses under 3 sentences.`
     // Get AI response
     const response = await hf.textGeneration({
-      model: 'HuggingFaceH4/zephyr-7b-beta',
+      model: 'mistralai/Mistral-7B-Instruct-v0.2',
       inputs: prompt,
       parameters: {
         max_new_tokens: 200,
