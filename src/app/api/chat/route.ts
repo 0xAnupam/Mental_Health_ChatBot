@@ -1,4 +1,3 @@
-// src/app/api/chat/route.ts
 import { HfInference } from '@huggingface/inference'
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/db'
@@ -35,10 +34,7 @@ export async function POST(request: Request) {
       select: { message: true }
     })
 
-    // Build the prompt with context
-    // const prompt = `Context: ${context.map(c => c.message).join(', ') || 'none'}\nUser: ${message}\nAssistant:`
-    // src/app/api/chat/route.ts
-    // src/app/api/chat/route.ts
+    
 const prompt = `You are a mental health companion. Use ONLY the user's previous messages as context.
 User's previous messages: ${context.map(c => c.message).join(' | ') || 'None'}
 Current message: ${message}
@@ -50,7 +46,7 @@ Focus on:
 Keep responses under 3 sentences.`
     // Get AI response
     const response = await hf.textGeneration({
-      model: 'mistralai/Mistral-7B-Instruct-v0.2',
+      model: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
       inputs: prompt,
       parameters: {
         max_new_tokens: 200,
