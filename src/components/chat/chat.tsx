@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { Send, Loader2, MenuIcon, X, Sun, Moon, MessageSquare, Settings, LogIn, LogOut, Bot } from 'lucide-react'
+import { Send, Loader2, MenuIcon, X, Sun, Moon, MessageSquare, LogIn, LogOut, Bot } from 'lucide-react'
 
 export function ChatInterface() {
   const [messages, setMessages] = useState<{ text: string; isUser: boolean; timestamp: Date }[]>([])
